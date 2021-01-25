@@ -1,0 +1,148 @@
+# 상속
+--작성일 : 21 / 01 / 25
+
+## 상속
+
+### 정의
+
+- 기존의 클래스를 재사용하여 새로운 클래스를 정의
+- 서브클래스는 슈퍼클래스를 포함한다
+- 슈퍼클래스의 모든 메소드 및 변수는 서브클래스에 포함된다.
+- 서브클래스에 정의된 모든 메소드 및 변수는 슈퍼클래스와 관련이 없다.
+
+### 포함 관계
+
+- 상속이 아닌 클래스 내부에 새로운 클래스를 선언하는 것
+
+```jsx
+class A {
+	int a;
+}
+class B {
+	A test = new A();
+	int b;
+}
+```
+
+- 상속과의 차이
+    - 상속 - B는 A 이다.  (is-a)
+    - 포함 - B는 A 를 가지고 있다.  (has-a)
+    - 위처럼 관계를 정의할 때 포함인지, 아니면 다른 정의인지 확인하여 포함 혹은 상속으로 관계를 처리한다.
+        - ex) Deck 은 Card 이다 (X) Deck 은 Card를 가지고 있다 (O) → 포함 관계 정의
+
+### 단일 상속
+
+- 자바에서는 서브클래스가 하나의 슈퍼클래스만 가질 수 있다.
+- 일대다 관계로 부모클래스는 여러 서브클래스를 가질 수 있다 ex) object class
+
+Object Class
+
+- 모든 클래스의 슈퍼 클래스
+- 상속관계를 정의하지 않은 클래스는 Object Class가 슈퍼클래스가 된다.
+    - 따라서 상속관계를 정의했더라도 그 슈퍼클래스 혹은 슈퍼클래스의 슈퍼클래스는 Object Class의 서브클래스이다. 모든 클래스는 Object의 자손이 된다.
+    - toString이나 equals는 object의 존재하므로 모든클래스에서 상속하므로 전부 사용할 수 있다.
+
+## 오버라이딩
+
+### 정의
+
+- 슈퍼클래스에서 상속받은 메소드를 재정의 하는 것
+
+### 오버라이딩의 조건
+
+- **슈퍼클래스와 메소드명이 같아야한다**
+- **슈퍼클래스와 매개변수가 같아야한다**
+- **슈퍼클래스와 반환타입이 같아야한다**
+- 단 접근제한자와 예외(exception)은 제한된 조건에서 다르게 선언할 수 있음
+    - 접근제한자는 슈퍼클래스의 메소드보다 좁은 범위로 설정할 수 없다
+        - 슈퍼클래스에서 default라면, 서브클래스에서는 private으로 설정할 수 없다.
+    - 슈퍼클래스보다 많은 예외를 선언할 수 없다
+
+    ```jsx
+    class A {
+    	void f() throws IOException, SQLException{}
+    }
+
+    //올바른 사용
+    class B extends A{
+    	void f() throws IOException {}
+    }
+
+    //error
+    class C extends A{
+    	void f() throws Exception{}
+    }
+
+    /* Exception은 모든 예외의 조상임, 단순히 예외의 수가 아닌 범위(상속관계) 또한 고려해야함
+    ```
+
+    - 예외처리에서는 예외의 수 뿐만아니라 범위또한 고려해야한다.
+    - 인스턴스 메소드를 static 메소드로 변경할 수 없다. 반대또한 마찬가지
+
+### 오버로딩 vs 오버라이딩
+
+- 오버로딩 - 기존에 없는 새로운 메소드를 정의(new)
+- 오버라이딩 - 상속받은 메소드의 내용만 변경
+- 따라서 상속받은 메소드와 다른 매개변수를 갖는 메소드는 오버로딩이다.
+
+```jsx
+class sup{
+	void testF() {
+		System.out.println("parrent");
+	}
+}
+class sub extends sup{
+	//overriding
+	void testF() {
+		System.out.println("Override");
+	}
+	//overloading	
+	void testF(int a) {
+		System.out.println("Overload");
+	}
+	//error
+	int testF() {
+		System.out.println("error");
+		return 1;
+	}
+}
+```
+
+- 상속받은 클래스의 반환형만 바꾸는 것은 오버로딩도 아니고 오버라이딩도 아니기 때문에 에러
+
+### super
+
+- super는 서브클래스에서 슈퍼클래스를 참조하는 데 쓰는 키워드 (this 처럼 사용)
+    - super.a , super.method()
+- super역시 인스턴스가 있어야하므로 static 변수나 메소드에는 접근 불가
+- 모든 메소드에서 super 키워드 자동정의(슈퍼클래스나 없다면 object)
+
+```jsx
+class A {
+	int a;
+	int b;
+}
+class B extends A {
+	int b;
+	//모두 슈퍼클래스의 a를 참조
+	a;
+	this.a;
+	super.a;
+	//서브 클래스의 b를 참조
+	b;
+	this.b;
+	//super 클래스의 b를 참조
+	super.b;
+}
+```
+
+- 서브클래스에서 같은 이름의 변수명이 선언되었을 경우 다른 호출을 보임
+    - 따라서 상속받은 변수명, 메소드라면 호출할 때 명확히 구분하는 것이 바람직
+
+### super()
+
+- 슈퍼클래스의 생성자 호출
+- Object Class 를 제외한 모든 생성자 첫 줄에는 this() 혹은 super()를 삽입해야한다. 그렇지 않으면 컴파일러가 자동으로 super()삽입 (명시적 상속관계가 없다면 super()를 통해 Object() 삽입)
+    - 서브클래스의 생성자에 super(args)를 삽입하지 않으면 자동으로 super()를 삽입한다. 이 때 슈퍼클래스에 기본생성자가 없다면 컴파일 에러가 발생한다.
+- super() 및 this()는 모두 생성자 블록의 맨 첫 줄에 작성되어야만 한다.
+    - 따라서 모든 생성자는 끝까지 가면 Object()를 호출한다.
