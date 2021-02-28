@@ -6,7 +6,7 @@ JVM 내의 한 프로세스의 멀티쓰레드는 Concurrency하게 동작합니
 
 JVM은 쓰레드를 New, Runnable, Running, Wating, Terminate의 다섯가지 상태로 관리합니다. 쓰레드의 상태는 `getState()` 메서드 호출로 반환받을 수 있습니다.
 
-![img](../img/ThreadScheduling.PNG)
+![img](../img/ThreadScheduling.png)
 
 ### New
 
