@@ -143,26 +143,26 @@ tree2.apple.size = tree1.apple.size;
 */
 
 private LinkedList<E> superClone() {
-    try {
-        return (LinkedList<E>) super.clone();
-    } catch (CloneNotSupportedException e) {
-        throw new InternalError(e);
-    }
+	try {
+		return (LinkedList<E>) super.clone();
+	} catch (CloneNotSupportedException e) {
+		throw new InternalError(e);
+	}
 }
 
 public Object clone() {
-    LinkedList<E> clone = superClone();
+	LinkedList<E> clone = superClone();
 
-    // Put clone into "virgin" state
-    clone.first = clone.last = null;
-    clone.size = 0;
-    clone.modCount = 0;
+	// Put clone into "virgin" state
+	clone.first = clone.last = null;
+	clone.size = 0;
+	clone.modCount = 0;
 
-    // Initialize clone with our elements
-    for (Node<E> x = first; x != null; x = x.next)
-        clone.add(x.item);
+	// Initialize clone with our elements
+	for (Node<E> x = first; x != null; x = x.next)
+		clone.add(x.item);
 
-    return clone;
+	return clone;
 }
 ```
 
@@ -275,6 +275,7 @@ class Tree {
 	public Tree(Tree t){
 		this.height = t.height;
 		this.apple = new Apple(t.apple);
+	}
 }
 ```
 
@@ -299,8 +300,8 @@ class Tree {
 */
 
 public LinkedList(Collection<? extends E> c) {
-    this();
-    addAll(c);
+	this();
+	addAll(c);
 }
 ```
 
