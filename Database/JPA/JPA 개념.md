@@ -2,7 +2,8 @@
 
 **JPA(Java Persistence API)는 자바의 표준 ORM(Object-relational mapping)**으로 자바 어플리케이션과 JDBC API의 인터페이스 역할을 합니다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cff30e37-905f-4e7c-9b8f-738209b52b1f/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cff30e37-905f-4e7c-9b8f-738209b52b1f/Untitled.png)
+![image](https://user-images.githubusercontent.com/49678555/125571079-061552c8-ed27-4364-b3f5-b5788b51d1af.png)
+
 
 JPA는 실제 JDBC와 연결을 동작시키는 것이 아닌 **표준 인터페이스 모음이므로 사용을 위해선 실제 구현체를 가진 프레임워크를 이용합니다.**
 
